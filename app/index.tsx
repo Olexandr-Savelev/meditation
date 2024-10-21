@@ -1,4 +1,10 @@
-import { ImageBackground, ImageSourcePropType, Text, View } from "react-native";
+import {
+  ImageBackground,
+  ImageSourcePropType,
+  StatusBar,
+  Text,
+  View,
+} from "react-native";
 import bechImage from "../assets/meditation-images/beach.webp";
 import CustomButton from "@/components/CustomButton";
 import { Href, useRouter } from "expo-router";
@@ -29,6 +35,7 @@ export default function Index() {
             title={"Get Started"}
           />
         </View>
+        <StatusBar barStyle="light-content" />
       </AppGradient>
     </ImageBackground>
   );
