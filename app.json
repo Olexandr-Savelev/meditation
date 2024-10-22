@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/simpleMeditationLogo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0a4d4a"
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true
