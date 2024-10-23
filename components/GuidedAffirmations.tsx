@@ -1,7 +1,7 @@
 import { View, Text, FlatList, Pressable, Image } from "react-native";
 import React from "react";
 import { GalleryPreviewData } from "./models/AffirmationCategory";
-import { Href, Link } from "expo-router";
+import { Link } from "expo-router";
 
 interface GuidedAffirmationsProps {
   title: string;
@@ -22,7 +22,7 @@ const GuidedAffirmations = ({ title, preview }: GuidedAffirmationsProps) => {
           renderItem={({ item }) => (
             <Link
               className="mr-4"
-              href={`/affirmations/${item.id}` as Href}
+              href={`/affirmations/${item.id}`}
               asChild
             >
               <Pressable>
