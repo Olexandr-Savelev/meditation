@@ -1,6 +1,7 @@
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import { TimerContextProvider } from "@/context/TimerContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,26 +21,28 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="(tabs)"
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="meditate/[id]"
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="(modal)/adjust-meditation-duration"
-        options={{
-          presentation: "modal",
-          headerShown: false,
-        }}
-      />
-    </Stack>
+    <TimerContextProvider>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="meditate/[id]"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="(modal)/adjust-meditation-duration"
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </TimerContextProvider>
   );
 }

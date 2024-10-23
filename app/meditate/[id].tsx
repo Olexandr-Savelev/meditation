@@ -14,12 +14,14 @@ import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
 import { Audio } from "expo-av";
+import { useTimerContext } from "@/context/TimerContext";
 
 const Meditate = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
 
-  const [seconds, setSeconds] = useState(30);
+  const { duration: secondsReamaining, setDuration } = useTimerContext();
+
   const [isMeditate, setIsMeditate] = useState(false);
   const [sound, setSound] = useState<Audio.Sound>();
   const [isPlayingAudio, setIsPlyingAudio] = useState(false);
@@ -29,8 +31,8 @@ const Meditate = () => {
 
     if (isMeditate) {
       interval = setInterval(() => {
-        if (seconds > 0) {
-          setSeconds(seconds - 1);
+        if (secondsReamaining > 0) {
+          setDuration(secondsReamaining - 1);
         } else {
           setIsMeditate(false);
           clearInterval(interval);
@@ -42,7 +44,7 @@ const Meditate = () => {
     }
 
     return () => clearInterval(interval);
-  }, [seconds, isMeditate]);
+  }, [secondsReamaining, isMeditate]);
 
   useEffect(() => {
     return () => {
@@ -50,12 +52,18 @@ const Meditate = () => {
     };
   }, [sound]);
 
-  const formatedMinutes = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const formatedSeconds = String(seconds % 60).padStart(2, "0");
+  const formatedMinutes = String(Math.floor(secondsReamaining / 60)).padStart(
+    2,
+    "0"
+  );
+  const formatedSecondsReamaining = String(secondsReamaining % 60).padStart(
+    2,
+    "0"
+  );
 
   const toggleMeditationStatus = async () => {
-    if (seconds === 0) {
-      setSeconds(30);
+    if (secondsReamaining === 0) {
+      setDuration(10);
     }
     setIsMeditate(!isMeditate);
     await toggleSound();
@@ -97,6 +105,7 @@ const Meditate = () => {
           <Pressable
             className="absolute top-8"
             onPress={() => {
+              setDuration(10);
               router.back();
             }}
           >
@@ -109,7 +118,7 @@ const Meditate = () => {
           <View className="flex-1 justify-center items-center w-full ">
             <View className="w-40 h-40 rounded-full bg-slate-50 justify-center items-center border-blue-700 border">
               <Text className="text-4xl text-blue-700 font-rmono">
-                {formatedMinutes}:{formatedSeconds}
+                {formatedMinutes}:{formatedSecondsReamaining}
               </Text>
             </View>
           </View>
